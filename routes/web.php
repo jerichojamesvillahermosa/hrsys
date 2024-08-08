@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
@@ -33,6 +34,14 @@ Route::middleware('auth')->group(function () {
         Route::patch('/store', [TestController::class, 'store'])->name('store'); //not yet implemented
     });
 
+    Route::group([
+        'prefix' => 'announcement',
+        'as' => 'announcement.',
+    ], function () {
+        Route::get('/', [AnnouncementController::class, 'index'])->name('index');
+        Route::get('/create', [AnnouncementController::class, 'create'])->name('create');
+        Route::patch('/store', [AnnouncementController::class, 'get'])->name('store');
+    });
 });
 
 require __DIR__.'/auth.php';

@@ -34,14 +34,7 @@ Route::middleware('auth')->group(function () {
         Route::patch('/store', [TestController::class, 'store'])->name('store'); //not yet implemented
     });
 
-    Route::group([
-        'prefix' => 'announcement',
-        'as' => 'announcement.',
-    ], function () {
-        Route::get('/', [AnnouncementController::class, 'index'])->name('index');
-        Route::get('/create', [AnnouncementController::class, 'create'])->name('create');
-        Route::patch('/store', [AnnouncementController::class, 'get'])->name('store');
-    });
+    Route::resource('announcement', AnnouncementController::class);
 });
 
 require __DIR__.'/auth.php';

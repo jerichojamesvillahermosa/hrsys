@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\Announcement;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class AnnouncementController extends Controller
 {
+    
     public function create(): Response
     {
         return Inertia::render('Announcement/Create');
@@ -40,4 +41,15 @@ class AnnouncementController extends Controller
 
         return response()->json(['message' => 'Announcement created successfully'], 200);
     }
+    public function index(): Response
+    {
+        $announcementList = Announcement::all();
+
+        // dd($announcementList);
+        // return Inertia::render('Announcement/List');
+        return Inertia::render('Announcement/List', [
+            'announcements' => $announcementList,
+        ]);
+    }
+    
 }

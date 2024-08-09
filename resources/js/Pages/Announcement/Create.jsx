@@ -43,7 +43,7 @@ function Create() {
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
-            <h1 className="text-2xl font-bold mb-6">Create Announcement</h1>
+            <h1 className="text-2xl font-bold mb-6">Create Announcements</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="title" className="block text-gray-700 font-medium mb-2">Title</label>
@@ -53,7 +53,7 @@ function Create() {
                         placeholder="Enter title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        className="w-40 p-2 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     />
                 </div>
                 <div className="mb-4">

@@ -36,4 +36,13 @@ class AnnouncementController extends Controller
 
         return redirect()->route('announcement.create')->with('success', 'Announcement created successfully');
     }
+    public function show($id): Response
+{
+    $announcement = Announcement::findOrFail($id);
+
+    return Inertia::render('Announcement/Show', [
+        'announcement' => $announcement,
+    ]);
+}
+
 }

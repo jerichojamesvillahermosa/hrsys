@@ -66,7 +66,7 @@ function Create() {
                         placeholder="Enter title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-40 p-2 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     />
                     {errors.title && <p className="text-red-600 mt-2">{errors.title[0]}</p>}
                 </div>

@@ -21,6 +21,10 @@ class AnnouncementController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'title.required' => 'Please input a title',
+            'content.required' => 'Please input content',
+            'image.max' => "Please change the file uploaded to a file that doesn't exceed 5 MB",
         ]);
 
         $imagePath = null;
@@ -34,6 +38,6 @@ class AnnouncementController extends Controller
             'image_path' => $imagePath,
         ]);
 
-        return redirect()->route('announcement.create')->with('success', 'Announcement created successfully');
+        return response()->json(['message' => 'Announcement created successfully'], 200);
     }
 }

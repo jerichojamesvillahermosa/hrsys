@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\Announcement;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class AnnouncementController extends Controller
 {
+    
     public function create(): Response
     {
         return Inertia::render('Announcement/Create');
@@ -40,4 +41,14 @@ class AnnouncementController extends Controller
 
         return response()->json(['message' => 'Announcement created successfully'], 200);
     }
+    public function index(): Response
+    {
+        $announcements = Announcement::orderBy('created_at', 'desc')->paginate(10);
+
+        return Inertia::render('Announcement/List', [
+            'announcements' => $announcements,
+        ]);
+    }
+
+    
 }

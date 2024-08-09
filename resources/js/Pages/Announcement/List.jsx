@@ -1,31 +1,18 @@
-import React, { useState } from 'react';
-import { usePage } from '@inertiajs/react';
+import React from 'react';
+import { Link, usePage } from '@inertiajs/react';
 
-const List = () => {
-  const { announcements, auth } = usePage().props;
-  const sortedAnnouncements = announcements.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-  // Pagination state
-  const [currentPage, setCurrentPage] = useState(1);
-  const announcementsPerPage = 10;
-
-  // Calculate the indices of the announcements to display
-  const indexOfLastAnnouncement = currentPage * announcementsPerPage;
-  const indexOfFirstAnnouncement = indexOfLastAnnouncement - announcementsPerPage;
-  const currentAnnouncements = sortedAnnouncements.slice(indexOfFirstAnnouncement, indexOfLastAnnouncement);
-
-  // Function to change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+const List = ({ announcements, auth }) => {
+  const { props } = usePage();
+  const { data, links, current_page } = props.announcements;
 
   const baseURL = 'http://localhost/storage/';
-  // const imageUrl = image_path ? `${baseURL}${image_path}` : '';
 
   return (
     <div className="flex justify-center bg-gray-100 min-h-screen py-10">
       <div className="w-full max-w-2xl">
         <h2 className="text-3xl font-bold mb-8 text-center">Announcements</h2>
         <div className="space-y-6 overflow-y-auto max-h-screen" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {currentAnnouncements.map((announcement) => (
+          {data.map((announcement) => (
             <div key={announcement.id} className="bg-white shadow-md rounded-lg overflow-hidden">
               {announcement.image_path ? (
                 <div className="flex justify-center">
@@ -43,12 +30,12 @@ const List = () => {
                   POSTED: <span className="font-normal text-gray-600">{announcement.created_at}</span>
                 </p>
                 <div className="flex justify-between items-center">
-                  <a
+                  <Link
                     href={`/announcements/${announcement.id}`}
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
                   >
                     Show Announcement
-                  </a>
+                  </Link>
                   {auth.user.isAdmin ? (
                     <div className="flex space-x-2">
                       <button
@@ -73,14 +60,13 @@ const List = () => {
 
         {/* Pagination */}
         <div className="flex justify-center mt-6">
-          {Array.from({ length: Math.ceil(sortedAnnouncements.length / announcementsPerPage) }, (_, index) => (
+          {links.map((link, index) => (
             <button
-              key={index + 1}
-              onClick={() => paginate(index + 1)}
-              className={`mx-1 px-3 py-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-            >
-              {index + 1}
-            </button>
+              key={index}
+              onClick={() => window.location.href = link.url}
+              className={`mx-1 px-3 py-1 rounded ${current_page === link.label ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+              dangerouslySetInnerHTML={{ __html: link.label }}
+            />
           ))}
         </div>
       </div>

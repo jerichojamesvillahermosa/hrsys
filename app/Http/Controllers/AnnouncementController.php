@@ -43,13 +43,12 @@ class AnnouncementController extends Controller
     }
     public function index(): Response
     {
-        $announcementList = Announcement::all();
+        $announcements = Announcement::orderBy('created_at', 'desc')->paginate(10);
 
-        // dd($announcementList);
-        // return Inertia::render('Announcement/List');
         return Inertia::render('Announcement/List', [
-            'announcements' => $announcementList,
+            'announcements' => $announcements,
         ]);
     }
+
     
 }
